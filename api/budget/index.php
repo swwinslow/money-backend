@@ -5,6 +5,10 @@ require_once '../../includes/db.php';
 require_once '../../model/budget.php';
 require_once '../../model/networth.php';
 require_once '../../model/grocery.php';
+require_once '../../model/blddd.php';
+require_once '../../model/pay.php';
+require_once '../../model/peloton.php';
+require_once '../../model/home.php';
 
 
 // Get the request method
@@ -24,97 +28,82 @@ foreach ($_SERVER as $key => $value) {
     }
 
 $uriSegments = explode('/', $uri);
-$api_request_name = $uriSegments[5];
+$api_requset_category = $uriSegments[5];
+$api_requset_name = $uriSegments[6];
 
-switch ($api_request_name) {
-        case 'monthCategory':
-                $monthCategory = Budget::monthCategory();
-                http_response_code(201);
-                echo json_encode($monthCategory);
-                break;
-        
-        case 'budgetOverview':
-                $budgetOverview = Budget::budgetOverview();
-                http_response_code(201);
-                echo json_encode($budgetOverview);
-                break;
+// var_dump($api_requset_category);
 
-        case 'budgetSalaryOverview':
-                $budgetSalaryOverview = Budget::budgetSalaryOverview();
-                http_response_code(201);
-                echo json_encode($budgetSalaryOverview);
-                break;
-        case 'networthYearCalculation':
-                $networthYearCalculation = Networth::networthYearCalculation();
-                http_response_code(201);
-                echo json_encode($networthYearCalculation);
-                break;
+// // var_dump($api_requset_name);
+// die();
+
+if ($api_requset_category == "networth"){
+
+        switch ($api_requset_name) {
+                case 'NetworthPerQuarter':
+                        $NetworthPerQuarter = Networth::NetworthPerQuarter();
+                        http_response_code(201);
+                        echo json_encode($NetworthPerQuarter);
+                        break;
+
+                case 'networthYearCalculation':
+                        $networthYearCalculation = Networth::networthYearCalculation();
+                        http_response_code(201);
+                        echo json_encode($networthYearCalculation);
+                        break;
         
-        case 'networthYearCalculationCategory':
-                $networthYearCalculationCategory = Networth::networthYearCalculationCategory();
-                http_response_code(201);
-                echo json_encode($networthYearCalculationCategory);
-                break;
-                //networthYearCalculationCategory
+                case 'networthYearCalculationCategory':
+                        $networthYearCalculationCategory = Networth::networthYearCalculationCategory();
+                        http_response_code(201);
+                        echo json_encode($networthYearCalculationCategory);
+                        break;
         
-        case 'networthYearPercentage':
-                $networthYearPercentage = Networth::networthYearPercentage();
-                http_response_code(201);
-                echo json_encode($networthYearPercentage);
-                break;
-                //
-        //
-        case 'NetworthPerQuarter':
-                $NetworthPerQuarter = Networth::NetworthPerQuarter();
-                http_response_code(201);
-                echo json_encode($NetworthPerQuarter);
-                break;
+                case 'networthYearPercentage':
+                        $networthYearPercentage = Networth::networthYearPercentage();
+                        http_response_code(201);
+                        echo json_encode($networthYearPercentage);
+                        break;
+        }               
+} else if ($api_requset_category == "budget"){
+        switch ($api_requset_name) {
+                case 'monthCategory':
+                        $monthCategory = Budget::monthCategory();
+                        http_response_code(201);
+                        echo json_encode($monthCategory);
+                        break;
+                
+                case 'budgetOverview':
+                        $budgetOverview = Budget::budgetOverview();
+                        http_response_code(201);
+                        echo json_encode($budgetOverview);
+                        break;
+        
+                // case 'budgetSalaryOverview':
+                //         $budgetSalaryOverview = Budget::budgetSalaryOverview();
+                //         http_response_code(201);
+                //         echo json_encode($budgetSalaryOverview);
+                //         break;
+                
+                case 'fullYearReview':
+                        $monthCategory = Budget::monthCategory();
+                        http_response_code(201);
+                        echo json_encode($monthCategory);
+                        break;
+                 
+                case 'insightData':
+                        $insightData = Home::insightData();
+                        http_response_code(201);
+                        echo json_encode($insightData);
+                        break;  
+
+                case 'UtilsOnYear':
+                        $UtilsOnYear = Home::UtilsOnYear();
+                        http_response_code(201);
+                        echo json_encode($UtilsOnYear);
+                        break; 
+                        
+        }
 }
 
 
-// case 'POST':
-//         $data = json_decode(file_get_contents('php://input'), true);
-//         $id = createItem($pdo, $data);
-//         http_response_code(201);
-//         echo json_encode(['id' => $id]);
-//         break;
-
-// case 'PUT':
-//         if ($id) {
-//         $data = json_decode(file_get_contents('php://input'), true);
-//         updateItem($pdo, $id, $data);
-//         echo json_encode(['message' => 'Item Updated']);
-//         } else {
-//         http_response_code(400);
-//         echo json_encode(['message' => 'Bad Request']);
-//         }
-//         break;
-
-// case 'DELETE':
-//         if ($id) {
-//         deleteItem($pdo, $id);
-//         echo json_encode(['message' => 'Item Deleted']);
-//         } else {
-//         http_response_code(400);
-//         echo json_encode(['message' => 'Bad Request']);
-//         }
-//         break;
-
-// default:
-//         http_response_code(405);
-//         echo json_encode(['message' => 'Method Not Allowed']);
-//         break;
-
-
-
-
-
-// if ($method == 'GET') {
-//         $trans = Trans::getAllTrans();
-//         echo json_encode($trans);
-// } else {
-//     http_response_code(405); // Method Not Allowed
-//     echo json_encode(["message" => "Method not allowed"]);
-// }}
 
 ?>

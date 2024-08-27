@@ -19,6 +19,7 @@ class Networth {
     //
 
     public static function networthYearCalculationCategory() {
+
         global $pdo;
         $year = '2023';
         

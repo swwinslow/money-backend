@@ -20,6 +20,8 @@ class Budget {
         $year = '2024';
         $stmt = $pdo->query("SELECT ROUND((t1.money - t2.money),2) AS money, ROUND(t1.money,2) AS salary, ROUND(t2.money,2) AS trans, (ROUND(t3.budget_money,2) - ROUND(t1.money,2)) as left_over, ROUND(t3.budget_money,2) as budget, ROUND((t1.money -t3.budget_money ),2) as 'uncounted_money' FROM (SELECT SUM(amount) AS money FROM pay where year(date) = $year) as t1, (select sum(money) AS money from trans where YEAR(date) = $year) as t2, (SELECT SUM(c_money) as budget_money FROM `budget_months` WHERE `year` = $year) as t3");
         return $stmt->fetchAll();
-    }    
+    }  
+
+
 }
 ?>
